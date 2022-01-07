@@ -27,13 +27,13 @@ public class Book {
     
     private String title;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Author author;
 
     @ManyToOne
     private Genre genre;
 
-    @JoinColumn(name = "books")
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> commentList;
+//    @JoinColumn(name = "book")
+//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Comment> commentList;
 }

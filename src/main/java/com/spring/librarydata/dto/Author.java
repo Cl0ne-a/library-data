@@ -24,9 +24,9 @@ public class Author {
     private int id;
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY,
-            mappedBy = "author",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private List<Book> books;
+//    @OneToMany(fetch = FetchType.LAZY,
+//            mappedBy = "author",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true)
+//    private List<Book> books;
 }

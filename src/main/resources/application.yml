@@ -12,8 +12,7 @@ spring:
       hibernate:
         format_sql: false
 
-    show-sql: true
-
+    show-sql: false
 
 logging:
   level:
