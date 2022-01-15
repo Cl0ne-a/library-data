@@ -1,7 +1,7 @@
 package com.spring.librarydata.repository;
 
 import com.spring.librarydata.dto.Comment;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface CommentRepository extends CrudRepository<Comment, Integer> {
+public interface CommentRepository extends PagingAndSortingRepository<Comment, Integer> {
 }
