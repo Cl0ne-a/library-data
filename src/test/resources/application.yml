@@ -9,11 +9,19 @@ spring:
     hibernate:
       ddl-auto: create
 
+  shell:
+    interactive:
+      enabled: false
+
     properties:
       hibernate:
         format_sql: false
 
     show-sql: true
+
+  sql:
+    init:
+      mode: always
 
 logging:
   level:

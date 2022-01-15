@@ -2,6 +2,7 @@ package com.spring.librarydata;
 
 import com.spring.librarydata.dto.Author;
 import com.spring.librarydata.dto.Book;
+import com.spring.librarydata.dto.Comment;
 import com.spring.librarydata.dto.Genre;
 import com.spring.librarydata.repository.AuthorRepository;
 import com.spring.librarydata.repository.BookRepository;
@@ -93,5 +94,10 @@ public class ShellUI {
     @ShellMethod(key = "delete", value = "delete book by its id")
     void deleteBook(int bookId) {
         bookRepository.deleteById(bookId);
+    }
+
+    @ShellMethod(key = "list-comments", value = "list comments book id")
+    List<Comment> listCommentsByBookId(int bookId) {
+        return bookRepository.findCommentListByBookId(bookId);
     }
 }

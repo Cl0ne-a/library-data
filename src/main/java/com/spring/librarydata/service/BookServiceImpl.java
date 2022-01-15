@@ -6,16 +6,13 @@ import com.spring.librarydata.repository.BookRepository;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Collectors;
 
 @Service
 public class BookServiceImpl implements BookService {
-    private final BookRepository bookRepository;
+    public final BookRepository bookRepository;
 
     @Autowired
     public BookServiceImpl(BookRepository bookRepository) {
