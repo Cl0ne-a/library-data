@@ -2,11 +2,14 @@ package com.spring.librarydata.service;
 
 import com.spring.librarydata.dto.Book;
 import com.spring.librarydata.dto.Comment;
+import com.spring.librarydata.dto.Genre;
 import com.spring.librarydata.repository.BookRepository;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -51,5 +54,52 @@ public class BookServiceImpl implements BookService {
             }
         }
         return bookRepository.findById(bookId);
+    }
+
+    @Override
+    public Book save(Book book) {
+        return bookRepository.save(book);
+    }
+
+    @Override
+    public void deleteById(int bookId) {
+        bookRepository.deleteById(bookId);
+    }
+
+    @Override
+    public Iterable<Book> findAll() {
+        return bookRepository.findAll();
+    }
+
+    @Override
+    public Optional<Book> findById(int id) {
+        return bookRepository.findById(id);
+    }
+
+    @Transactional
+
+    @Override
+    public void updateBook(int bookId, String newTitle) {
+        bookRepository.updateBook(bookId, newTitle);
+    }
+
+    @Override
+    public List<Book> findByAuthorId(int authorId) {
+        return bookRepository.findByAuthor_Id(authorId);
+    }
+
+    @Override
+    public List<Book> findAllByGenre(Genre genre) {
+        return bookRepository.findAllByGenre(genre);
+    }
+
+    @Override
+    public List<Book> findByCommentListGreatedThan(int minCommentListCount) {
+        return bookRepository.findByCommentListGreatedThan(minCommentListCount);
+    }
+
+    @Override
+    public List<Comment> findCommentListByBookId(int bookId) {
+        return bookRepository.findCommentListByBookId(bookId);
     }
 }
