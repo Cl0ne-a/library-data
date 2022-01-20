@@ -42,16 +42,6 @@ public class ShellUI {
         return bookService.findAll();
     }
 
-    @ShellMethod(key ="book-by-author", value = "list all books by author id")
-    Iterable<Book> byAuthorId(int authorId) {
-        return bookService.findByAuthorId(authorId);
-    }
-
-    @ShellMethod(key = "book-by-genre", value = "list all books by genre id")
-    List<Book> byGenreId(int genreId) {
-        return bookService.findAllByGenre(genreService.findById(genreId).orElseThrow());
-    }
-
     @ShellMethod(key = "create-book", value = "create new book, use author and genre that are already in DB")
     Book save(String title, int authorId, int genreId) {
         Book bookToSave= Book.builder().title(title)
@@ -63,6 +53,16 @@ public class ShellUI {
                         .orElseThrow())
                 .build();
         return bookService.save(bookToSave);
+    }
+
+    @ShellMethod(key = "I-say", value = "comment on the book, book will be found by id")
+    AtomicBoolean addComment(int bookId, String comment) {
+        return bookService.addCommentByBookId(bookId, comment);
+    }
+
+    @ShellMethod(key = "list-comments", value = "list comments book id")
+    List<Comment> listCommentsByBookId(int bookId) {
+        return bookService.findCommentListByBookId(bookId);
     }
 
     @ShellMethod(key = "by-comments", value = "list books by number of comments greater than minimum")
@@ -78,11 +78,6 @@ public class ShellUI {
                 && bookService.findById(bookId).get().getTitle().equals(title);
     }
 
-    @ShellMethod(key = "I-say", value = "comment on the book, book will be found by id")
-    AtomicBoolean addComment(int bookId, String comment) {
-        return bookService.addCommentByBookId(bookId, comment);
-    }
-
     @ShellMethod(key = "book-by-comment", value = "find book by comment id")
     Book getByComment(int commentId) {
         return bookService.findBookByCommentId(commentId).get();
@@ -93,8 +88,13 @@ public class ShellUI {
         bookService.deleteById(bookId);
     }
 
-    @ShellMethod(key = "list-comments", value = "list comments book id")
-    List<Comment> listCommentsByBookId(int bookId) {
-        return bookService.findCommentListByBookId(bookId);
+    @ShellMethod(key ="book-by-author", value = "list all books by author id")
+    Iterable<Book> byAuthorId(int authorId) {
+        return bookService.findByAuthorId(authorId);
+    }
+
+    @ShellMethod(key = "book-by-genre", value = "list all books by genre id")
+    List<Book> byGenreId(int genreId) {
+        return bookService.findAllByGenre(genreService.findById(genreId).orElseThrow());
     }
 }

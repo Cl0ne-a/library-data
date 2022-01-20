@@ -2,7 +2,6 @@ package com.spring.librarydata.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
@@ -57,10 +56,6 @@ public class Book {
         return author;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
-    }
-
     public Genre getGenre() {
         return genre;
     }
@@ -71,10 +66,6 @@ public class Book {
 
     public List<Comment> getCommentList() {
         return commentList;
-    }
-
-    public void setCommentList(List<Comment> commentList) {
-        this.commentList = commentList;
     }
 
     @Override

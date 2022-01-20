@@ -2,7 +2,6 @@ package com.spring.librarydata.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -11,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Builder
 @NoArgsConstructor
@@ -29,10 +27,6 @@ public class Comment {
 
     public int getId() {
         return id;
-    }
-
-    public String getComment() {
-        return comment;
     }
 
     public Book getBook() {

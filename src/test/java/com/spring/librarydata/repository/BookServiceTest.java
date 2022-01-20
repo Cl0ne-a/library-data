@@ -5,7 +5,7 @@ import com.spring.librarydata.dto.Book;
 import com.spring.librarydata.dto.Comment;
 import com.spring.librarydata.dto.Genre;
 import com.spring.librarydata.service.BookService;
-import com.spring.librarydata.service.impl.BookServiceImpl;
+import com.spring.librarydata.service.impl.LibraryServiceImpl;
 import lombok.val;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -43,7 +43,7 @@ class BookServiceTest {
         // this bean will be injected into the OrderServiceTest class
         @Bean
         public BookService bookService() {
-            return new BookServiceImpl(bookRepository, commentRepository);
+            return new LibraryServiceImpl(bookRepository, commentRepository);
         }
     }
 
@@ -139,8 +139,8 @@ class BookServiceTest {
     @Test
     void findByAuthorId() {
         int id = 1;
-        List<Book> expected = Collections.emptyList();
-        when(bookRepository.findByAuthor_Id(id)).thenReturn(expected);
+        List<Book> expected = List.of(Book.builder().author(Author.builder().id(id).build()).build());
+        when(bookRepository.findAll()).thenReturn(expected);
         var actual = bookService.findByAuthorId(id);
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
     }

@@ -14,13 +14,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 @Service
-public class BookServiceImpl implements BookService {
+public class LibraryServiceImpl implements BookService {
     public final BookRepository bookRepository;
     public final CommentRepository commentRepository;
+
     @Autowired
-    public BookServiceImpl(BookRepository bookRepository, CommentRepository commentRepository) {
+    public LibraryServiceImpl(BookRepository bookRepository, CommentRepository commentRepository) {
         this.bookRepository = bookRepository;
         this.commentRepository = commentRepository;
     }
@@ -70,17 +72,25 @@ public class BookServiceImpl implements BookService {
     @Transactional
     @Override
     public void updateBook(int bookId, String newTitle) {
-        bookRepository.updateBook(bookId, newTitle);
+        bookRepository.findById(bookId).ifPresent(book -> book.setTitle(newTitle));
     }
 
     @Override
     public List<Book> findByAuthorId(int authorId) {
-        return bookRepository.findByAuthor_Id(authorId);
+        return bookRepository.findAll()
+                .stream()
+                .filter(book
+                        -> book.getAuthor().getId() == authorId)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Book> findAllByGenre(Genre genre) {
-        return bookRepository.findAllByGenre(genre);
+        return bookRepository.findAll()
+                .stream()
+                .filter(book
+                        -> book.getGenre() == genre)
+                .collect(Collectors.toList());
     }
 
     @Override
