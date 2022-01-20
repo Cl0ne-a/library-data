@@ -8,15 +8,18 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookRepository extends JpaRepository<Book, Integer> {
 
+    @Query("select b from Book b where b.author.id = :authorId")
     List<Book> findByAuthor_Id(int authorId);
 
+    @Query("select b from Book b where b.genre = :genre")
     List<Book> findAllByGenre(Genre genre);
 
     @Query("select b from Book b where b.commentList.size > :minCommentListCount")
-    List<Book> findByCommentListGreatedThan( int minCommentListCount);
+    List<Book> findByCommentListGreaterThan(int minCommentListCount);
 
     @Query("select b.commentList from Book b where b.id = :bookId")
     List<Comment> findCommentListByBookId(int bookId);
@@ -27,5 +30,12 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     void deleteById(int Id);
 
+    @Query("select b from Book b")
     List<Book> findAll();
+
+    @Query("select b from Book b join fetch b.commentList")
+    Optional<Book> findById(int id);
+
+    @Query("select b from Book b join fetch b.commentList")
+    List<Book> findBy(int specialCommentId);
 }

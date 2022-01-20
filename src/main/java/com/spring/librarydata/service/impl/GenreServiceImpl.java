@@ -1,14 +1,15 @@
-package com.spring.librarydata.service;
+package com.spring.librarydata.service.impl;
 
 import com.spring.librarydata.dto.Genre;
 import com.spring.librarydata.repository.GenreRepository;
+import com.spring.librarydata.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class GenreServiceImpl implements GenreService{
+public class GenreServiceImpl implements GenreService {
     private final GenreRepository genreRepository;
 
     @Autowired

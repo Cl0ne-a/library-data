@@ -5,7 +5,7 @@ import com.spring.librarydata.dto.Book;
 import com.spring.librarydata.dto.Comment;
 import com.spring.librarydata.dto.Genre;
 import com.spring.librarydata.service.BookService;
-import com.spring.librarydata.service.BookServiceImpl;
+import com.spring.librarydata.service.impl.BookServiceImpl;
 import lombok.val;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -32,48 +33,39 @@ import static org.mockito.Mockito.when;
 class BookServiceTest {
 
     private static final BookRepository bookRepository = mock(BookRepository.class);
+    private static final CommentRepository commentRepository = mock(CommentRepository.class);
 
     @Autowired
     private BookService bookService;
-
 
     @Configuration
     static class ContextConfiguration {
         // this bean will be injected into the OrderServiceTest class
         @Bean
         public BookService bookService() {
-            return new BookServiceImpl(bookRepository);
+            return new BookServiceImpl(bookRepository, commentRepository);
         }
     }
 
     @DisplayName("Findes book that contains certain comment by its id")
     @Test
     void findBookByCommentId() {
-
         Book book = Book.builder()
                 .id(1)
-                .title("Good book")
-                .genre(Genre.builder()
-                        .id(2)
-                        .genre("comedy").build())
-                .author(Author.builder()
-                        .id(3)
-                        .name("Smith")
+                .commentList(List.of(Comment.builder()
+                        .id(1)
+                        .book(Book.builder()
+                        .id(1)
                         .build())
-                .commentList(List.of(
-                        Comment.builder().id(1).comment("This book is so nice").build(),
-                        Comment.builder().id(2).comment("Another good feedback").build(),
-                        Comment.builder().id(3).comment("Awful").build()
-                )).build();
+                        .build()))
+                .build();
 
-        when(bookRepository.findAll()).thenReturn(List.of(book));
+        when(commentRepository.findAll())
+                .thenReturn(book.getCommentList());
 
-
-        when(bookRepository.findById(1))
-                .thenReturn(Optional.ofNullable(book));
 
         val actual = bookService.findBookByCommentId(1);
-        assertThat(actual).usingRecursiveComparison().isEqualTo(Optional.of(book));
+        assertThat(actual.get().getId()).usingRecursiveComparison().isEqualTo(book.getId());
     }
 
     @DisplayName("retuens true if operationa is performed and instance by that id was added")
@@ -82,10 +74,10 @@ class BookServiceTest {
 
         int id = 1;
         String comment = "commented something";
+        List<Comment> commentList = new ArrayList<>(1);
         AtomicBoolean expectedResult = new AtomicBoolean(true);
-        Book book = Book.builder().id(id).title("nn").commentList(Collections.emptyList()).build();
+        Book book = Book.builder().id(id).title("nn").commentList(commentList).build();
         when(bookRepository.findById(id)).thenReturn(Optional.ofNullable(book));
-        assert book != null;
         when(bookRepository.save(book)).thenReturn(book);
 
         val result = bookService.addCommentByBookId(id, comment);

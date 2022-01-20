@@ -1,9 +1,11 @@
-package com.spring.librarydata.service;
+package com.spring.librarydata.service.impl;
 
 import com.spring.librarydata.dto.Book;
 import com.spring.librarydata.dto.Comment;
 import com.spring.librarydata.dto.Genre;
 import com.spring.librarydata.repository.BookRepository;
+import com.spring.librarydata.repository.CommentRepository;
+import com.spring.librarydata.service.BookService;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +18,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Service
 public class BookServiceImpl implements BookService {
     public final BookRepository bookRepository;
-
+    public final CommentRepository commentRepository;
     @Autowired
-    public BookServiceImpl(BookRepository bookRepository) {
+    public BookServiceImpl(BookRepository bookRepository, CommentRepository commentRepository) {
         this.bookRepository = bookRepository;
+        this.commentRepository = commentRepository;
     }
 
     @Override
@@ -39,21 +42,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Optional<Book> findBookByCommentId(int commentId) {
-        val specialComment =bookRepository.findAll().stream()
-                .map(Book::getCommentList)
-                .flatMap(comments -> comments.stream().filter(comment -> comment.getId() == commentId)).findFirst().get();
-        int bookId = 0;
-
-        for (Book book: bookRepository.findAll()) {
-            if (book.getCommentList().contains(specialComment)) {
-                bookId = book.getId();
-                break;
-            }
-            else {
-                System.out.println("no comment found");
-            }
-        }
-        return bookRepository.findById(bookId);
+        // TODO: 1/20/22 find withComments
+        val comments = commentRepository.findAll();
+        return comments.stream().filter(comment -> comment.getId() == commentId).map(Comment::getBook).findFirst();
     }
 
     @Override
@@ -77,7 +68,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Transactional
-
     @Override
     public void updateBook(int bookId, String newTitle) {
         bookRepository.updateBook(bookId, newTitle);
@@ -95,11 +85,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findByCommentListGreatedThan(int minCommentListCount) {
-        return bookRepository.findByCommentListGreatedThan(minCommentListCount);
+        return bookRepository.findByCommentListGreaterThan(minCommentListCount);
     }
 
     @Override
     public List<Comment> findCommentListByBookId(int bookId) {
-        return bookRepository.findCommentListByBookId(bookId);
+        return commentRepository.findAllByBook_Id(bookId);
     }
 }
