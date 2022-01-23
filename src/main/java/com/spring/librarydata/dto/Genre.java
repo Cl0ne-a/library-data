@@ -2,7 +2,6 @@ package com.spring.librarydata.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -36,5 +35,13 @@ public class Genre implements Serializable {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    @Override
+    public String toString() {
+        return "Genre{" +
+                "id=" + id +
+                ", genre='" + genre + '\'' +
+                '}';
     }
 }

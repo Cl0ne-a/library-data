@@ -44,7 +44,6 @@ public class LibraryServiceImpl implements BookService {
 
     @Override
     public Optional<Book> findBookByCommentId(int commentId) {
-        // TODO: 1/20/22 find withComments
         val comments = commentRepository.findAll();
         return comments.stream().filter(comment -> comment.getId() == commentId).map(Comment::getBook).findFirst();
     }
@@ -100,6 +99,9 @@ public class LibraryServiceImpl implements BookService {
 
     @Override
     public List<Comment> findCommentListByBookId(int bookId) {
-        return commentRepository.findAllByBook_Id(bookId);
+
+        return bookRepository.findById(bookId).isPresent()
+                ? bookRepository.findById(bookId).get().getCommentList()
+                : null;
     }
 }

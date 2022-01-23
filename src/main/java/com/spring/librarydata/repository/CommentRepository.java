@@ -9,6 +9,4 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
     @Query("select c from Comment c join fetch c.book")
     List<Comment> findAll();
-
-    List<Comment> findAllByBook_Id(int bookId);
 }

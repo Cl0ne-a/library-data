@@ -93,8 +93,4 @@ public class ShellUI {
         return bookService.findByAuthorId(authorId);
     }
 
-    @ShellMethod(key = "book-by-genre", value = "list all books by genre id")
-    List<Book> byGenreId(int genreId) {
-        return bookService.findAllByGenre(genreService.findById(genreId).orElseThrow());
-    }
 }
