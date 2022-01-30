@@ -2,16 +2,11 @@ spring:
   datasource:
     url: jdbc:h2:mem:bookstore
     initialization-mode: never
-  main:
-    allow-circular-references: true
+
   jpa:
     generate-ddl: true
     hibernate:
       ddl-auto: create
-
-  shell:
-    interactive:
-      enabled: false
 
     properties:
       hibernate:
