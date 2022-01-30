@@ -40,7 +40,7 @@ class BookServiceTest {
 
     @Configuration
     static class ContextConfiguration {
-        // this bean will be injected into the OrderServiceTest class
+
         @Bean
         public BookService bookService() {
             return new LibraryServiceImpl(bookRepository, commentRepository);
