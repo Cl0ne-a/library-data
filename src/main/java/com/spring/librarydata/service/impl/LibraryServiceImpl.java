@@ -8,6 +8,7 @@ import com.spring.librarydata.repository.CommentRepository;
 import com.spring.librarydata.service.BookService;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
