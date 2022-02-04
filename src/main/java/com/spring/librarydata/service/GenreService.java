@@ -1,6 +1,6 @@
 package com.spring.librarydata.service;
 
-import com.spring.librarydata.dto.Genre;
+import com.spring.librarydata.entity.Genre;
 
 import java.util.Optional;
 

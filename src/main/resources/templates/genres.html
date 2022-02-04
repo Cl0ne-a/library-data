@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>genres</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        .genres {
+            border: 1px solid steelblue;
+            width: 300px;
+            border-collapse: collapse;
+        }
+
+        .genres tr td, th {
+            padding: 5px;
+            border: 1px solid steelblue;
+        }
+
+        .genres td:last-child, td:first-child {
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+<!--th:unless="${#lists.isEmpty()}"-->
+    <div>
+        <table class="genres">
+            <thead>
+             <tr>
+                 <th>Id</th>
+                 <th>Genre</th>
+             </tr>
+            <tr th:each="genre: ${genres}">
+                <td th:text="${genre.id}"> id </td>
+                <td th:text="${genre.genre}"> genre </td>
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+</body>
+</html>

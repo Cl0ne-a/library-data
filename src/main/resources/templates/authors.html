@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>authors</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        .authors {
+            border: 1px solid steelblue;
+            width: 300px;
+            border-collapse: collapse;
+        }
+
+        .authors tr td, th {
+            padding: 5px;
+            border: 1px solid steelblue;
+        }
+
+        .authors td:last-child, td:first-child {
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+<!--th:unless="${#lists.isEmpty()}"-->
+    <div>
+        <table class="authors">
+            <thead>
+             <tr>
+                 <th>Id</th>
+                 <th>Name</th>
+             </tr>
+            <tr th:each="author: ${authors}">
+                <td th:text="${author.id}"> id </td>
+                <td th:text="${author.name}"> name </td>
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+</body>
+</html>

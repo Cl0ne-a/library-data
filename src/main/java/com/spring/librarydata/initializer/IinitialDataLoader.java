@@ -1,9 +1,9 @@
 package com.spring.librarydata.initializer;
 
-import com.spring.librarydata.dto.Author;
-import com.spring.librarydata.dto.Book;
-import com.spring.librarydata.dto.Comment;
-import com.spring.librarydata.dto.Genre;
+import com.spring.librarydata.entity.Author;
+import com.spring.librarydata.entity.Book;
+import com.spring.librarydata.entity.Comment;
+import com.spring.librarydata.entity.Genre;
 import com.spring.librarydata.repository.AuthorRepository;
 import com.spring.librarydata.repository.BookRepository;
 import com.spring.librarydata.repository.GenreRepository;

@@ -13,8 +13,8 @@ spring:
       hibernate:
         format_sql: false
 
-    show-sql: false
+    show-sql: true
 
 logging:
   level:
-    ROOT: ERROR
+    ROOT: info

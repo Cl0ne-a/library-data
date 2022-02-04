@@ -1,6 +1,6 @@
 package com.spring.librarydata.service.impl;
 
-import com.spring.librarydata.dto.Genre;
+import com.spring.librarydata.entity.Genre;
 import com.spring.librarydata.repository.GenreRepository;
 import com.spring.librarydata.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,8 @@
 package com.spring.librarydata.service.impl;
 
-import com.spring.librarydata.dto.Book;
-import com.spring.librarydata.dto.Comment;
-import com.spring.librarydata.dto.Genre;
+import com.spring.librarydata.dto.BookDto;
+import com.spring.librarydata.entity.Book;
+import com.spring.librarydata.entity.Comment;
 import com.spring.librarydata.repository.BookRepository;
 import com.spring.librarydata.repository.CommentRepository;
 import com.spring.librarydata.service.BookService;
@@ -17,14 +17,34 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 @Service
-public class LibraryServiceImpl implements BookService {
+public class BookServiceImpl implements BookService {
     public final BookRepository bookRepository;
     public final CommentRepository commentRepository;
 
     @Autowired
-    public LibraryServiceImpl(BookRepository bookRepository, CommentRepository commentRepository) {
+    public BookServiceImpl(BookRepository bookRepository, CommentRepository commentRepository) {
         this.bookRepository = bookRepository;
         this.commentRepository = commentRepository;
+    }
+
+    @Override
+    public BookDto save(BookDto bookDto) {
+        val book = BookDto.toDomainObject(bookDto);
+        val newBook = bookRepository.save(book);
+        return BookDto.toBookDto(newBook);
+    }
+
+    @Override
+    public Iterable<BookDto> findAll() {
+        val bookList = bookRepository.findAll();
+        return bookList.stream().map(BookDto::toBookDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public BookDto findById(int id) {
+        val book = bookRepository.findById(id).orElseThrow(RuntimeException::new);
+        return BookDto.toBookDto(book);
     }
 
     @Override
@@ -49,23 +69,8 @@ public class LibraryServiceImpl implements BookService {
     }
 
     @Override
-    public Book save(Book book) {
-        return bookRepository.save(book);
-    }
-
-    @Override
     public void deleteById(int bookId) {
         bookRepository.deleteById(bookId);
-    }
-
-    @Override
-    public Iterable<Book> findAll() {
-        return bookRepository.findAll();
-    }
-
-    @Override
-    public Optional<Book> findById(int id) {
-        return bookRepository.findById(id);
     }
 
     @Transactional
@@ -81,27 +86,5 @@ public class LibraryServiceImpl implements BookService {
                 .filter(book
                         -> book.getAuthor().getId() == authorId)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Book> findAllByGenre(Genre genre) {
-        return bookRepository.findAll()
-                .stream()
-                .filter(book
-                        -> book.getGenre() == genre)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Book> findByCommentListGreatedThan(int minCommentListCount) {
-        return bookRepository.findByCommentListGreaterThan(minCommentListCount);
-    }
-
-    @Override
-    public List<Comment> findCommentListByBookId(int bookId) {
-
-        return bookRepository.findById(bookId).isPresent()
-                ? bookRepository.findById(bookId).get().getCommentList()
-                : null;
     }
 }

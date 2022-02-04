@@ -1,6 +1,6 @@
 package com.spring.librarydata.service;
 
-import com.spring.librarydata.dto.Author;
+import com.spring.librarydata.entity.Author;
 
 import java.util.Optional;
 

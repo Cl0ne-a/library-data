@@ -1,6 +1,6 @@
 package com.spring.librarydata.service.impl;
 
-import com.spring.librarydata.dto.Author;
+import com.spring.librarydata.entity.Author;
 import com.spring.librarydata.repository.AuthorRepository;
 import com.spring.librarydata.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
